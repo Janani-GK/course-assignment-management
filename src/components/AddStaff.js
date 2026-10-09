@@ -1,8 +1,10 @@
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function AddStaff({ setPage }) {
+const API_URL = "https://course-assignment-backend.vercel.app";
 
+function AddStaff({ setPage }) {
   const skillList = [
     "Java",
     "Python",
@@ -41,7 +43,7 @@ function AddStaff({ setPage }) {
   async function getStaff() {
     try {
       const response = await axios.get(
-        "https://course-assignment-backend.vercel.app/api/staff"
+        `${API_URL}/api/staff`
       );
 
       setStaffList(response.data);
@@ -85,35 +87,41 @@ function AddStaff({ setPage }) {
 
   async function saveStaff() {
     if (
-      staff.name === "" ||
-      staff.id === "" ||
+      staff.name.trim() === "" ||
+      staff.id.trim() === "" ||
       staff.salary === "" ||
+      Number(staff.salary) < 0 ||
       staff.skills.length === 0 ||
       staff.batches.length === 0
     ) {
-      alert("Please fill all fields");
+      alert("Please fill all fields correctly");
       return;
     }
+
+    const staffData = {
+      ...staff,
+      salary: Number(staff.salary)
+    };
 
     try {
       if (editId === "") {
         await axios.post(
-          "https://course-assignment-backend.vercel.app/api/staff",
-          staff
+          `${API_URL}/api/staff`,
+          staffData
         );
 
         alert("Staff added successfully");
       } else {
         await axios.put(
-          `https://course-assignment-backend.vercel.app/api/staff/${editId}`,
-          staff
+          `${API_URL}/api/staff/${editId}`,
+          staffData
         );
 
         alert("Staff updated successfully");
       }
 
       clearForm();
-      getStaff();
+      await getStaff();
 
     } catch (error) {
       console.log(error);
@@ -133,9 +141,9 @@ function AddStaff({ setPage }) {
     setStaff({
       name: item.name,
       id: item.id,
-      salary: item.salary,
-      skills: item.skills,
-      batches: item.batches
+      salary: String(item.salary),
+      skills: item.skills || [],
+      batches: item.batches || []
     });
 
     setEditId(item._id);
@@ -152,16 +160,23 @@ function AddStaff({ setPage }) {
 
     try {
       await axios.delete(
-        `https://course-assignment-backend.vercel.app/api/staff/${id}`
+        `${API_URL}/api/staff/${id}`
       );
 
       alert("Staff deleted successfully");
-
-      getStaff();
+      await getStaff();
 
     } catch (error) {
       console.log(error);
-      alert("Error deleting staff");
+
+      if (error.response) {
+        alert(
+          error.response.data.message ||
+          "Error deleting staff"
+        );
+      } else {
+        alert("Cannot connect to backend");
+      }
     }
   }
 
@@ -179,7 +194,6 @@ function AddStaff({ setPage }) {
 
   return (
     <div className="container">
-
       <h1>
         {editId === "" ? "Add Staff" : "Edit Staff"}
       </h1>
@@ -211,6 +225,7 @@ function AddStaff({ setPage }) {
       <input
         type="number"
         placeholder="Salary"
+        min="0"
         value={staff.salary}
         onChange={(e) =>
           setStaff({
@@ -297,8 +312,12 @@ function AddStaff({ setPage }) {
                 <td>{item.name}</td>
                 <td>{item.id}</td>
                 <td>{item.salary}</td>
-                <td>{item.skills.join(", ")}</td>
-                <td>{item.batches.join(", ")}</td>
+                <td>
+                  {(item.skills || []).join(", ")}
+                </td>
+                <td>
+                  {(item.batches || []).join(", ")}
+                </td>
 
                 <td>
                   <button
@@ -318,7 +337,6 @@ function AddStaff({ setPage }) {
           )}
         </tbody>
       </table>
-
     </div>
   );
 }
