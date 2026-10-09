@@ -28,7 +28,7 @@ function AddStudent({ setPage }) {
   async function getStudents() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/students"
+        "https://course-assignment-backend.vercel.app/api/students"
       );
 
       setStudentList(response.data);
@@ -67,14 +67,14 @@ function AddStudent({ setPage }) {
     try {
       if (editId === "") {
         await axios.post(
-          "http://localhost:5000/api/students",
+          "https://course-assignment-backend.vercel.app/api/students",
           student
         );
 
         alert("Student added successfully");
       } else {
         await axios.put(
-          `http://localhost:5000/api/students/${editId}`,
+          `https://course-assignment-backend.vercel.app/api/students/${editId}`,
           student
         );
 
@@ -119,7 +119,7 @@ function AddStudent({ setPage }) {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/students/${id}`
+        `https://course-assignment-backend.vercel.app/api/students/${id}`
       );
 
       alert("Student deleted successfully");
