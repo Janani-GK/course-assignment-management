@@ -21,7 +21,7 @@ function Mapping({ setPage }) {
   async function getStudents() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/students"
+        "https://course-assignment-backend.vercel.app/api/students"
       );
 
       setStudentList(response.data);
@@ -34,7 +34,7 @@ function Mapping({ setPage }) {
   async function getStaff() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/staff"
+        "https://course-assignment-backend.vercel.app/api/staff"
       );
 
       setStaffList(response.data);
@@ -47,7 +47,7 @@ function Mapping({ setPage }) {
   async function getAssignments() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/assignments"
+        "https://course-assignment-backend.vercel.app/api/assignments"
       );
 
       setAssignmentList(response.data);
@@ -146,7 +146,7 @@ function Mapping({ setPage }) {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/assignments/${id}`
+        `https://course-assignment-backend.vercel.app/api/assignments/${id}`
       );
 
       alert("Assignment deleted");
