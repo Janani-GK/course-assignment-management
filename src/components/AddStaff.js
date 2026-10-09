@@ -41,7 +41,7 @@ function AddStaff({ setPage }) {
   async function getStaff() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/staff"
+        ""https://course-assignment-backend.vercel.app/api/staff""
       );
 
       setStaffList(response.data);
@@ -98,14 +98,14 @@ function AddStaff({ setPage }) {
     try {
       if (editId === "") {
         await axios.post(
-          "http://localhost:5000/api/staff",
+          "https://course-assignment-backend.vercel.app/api/staff",
           staff
         );
 
         alert("Staff added successfully");
       } else {
         await axios.put(
-          `http://localhost:5000/api/staff/${editId}`,
+          `https://course-assignment-backend.vercel.app/api/staff/${editId}`,
           staff
         );
 
@@ -152,7 +152,7 @@ function AddStaff({ setPage }) {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/staff/${id}`
+        `https://course-assignment-backend.vercel.app/api/staff/${id}`
       );
 
       alert("Staff deleted successfully");
