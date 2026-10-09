@@ -15,7 +15,7 @@ function Login({ setIsLoggedIn }) {
 
     try {
       const response = await axios.post(
-        "https://course-assignment-backend.vercel.app",
+        "https://course-assignment-backend.vercel.app/api/auth/login",
         {
           username: username,
           password: password
