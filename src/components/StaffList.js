@@ -12,7 +12,7 @@ function StaffList({ setPage }) {
   async function getStaff() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/staff"
+        "https://course-assignment-backend.vercel.app/api/staff"
       );
 
       setStaffList(response.data);
