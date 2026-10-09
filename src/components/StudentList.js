@@ -12,7 +12,7 @@ function StudentList({ setPage }) {
   async function getStudents() {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/students"
+        "https://course-assignment-backend.vercel.app/api/students"
       );
 
       setStudentList(response.data);
