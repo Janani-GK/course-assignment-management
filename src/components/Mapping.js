@@ -107,7 +107,7 @@ function Mapping({ setPage }) {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/assignments",
+        "https://course-assignment-backend.vercel.app/api/assignments",
         assignment
       );
 
